@@ -13,9 +13,10 @@ static int readThread(struct pt *pt){
 	static unsigned long timestamp = 0;
 	PT_BEGIN(pt);
 	while(1) { 
-		PT_WAIT_UNTIL(pt, millis() - timestamp > 100 );
+		PT_WAIT_UNTIL(pt, millis() - timestamp > 107 );
 		timestamp = millis(); // take a new timestamp
     int state = digitalRead(PIN_RECV);
+		Serial.print(state);
 	  digitalWrite(PIN_STATUS,!state);
 	}
 	PT_END(pt);
@@ -26,11 +27,13 @@ static int markspaceThread(struct pt *pt){
 	PT_BEGIN(pt);
 	while(1) { 
 		PT_WAIT_UNTIL(pt, millis() - timestamp > 1000 );
-		timestamp = millis(); // take a new timestamp
 	  irsend.mark(0);
-		PT_WAIT_UNTIL(pt, millis() - timestamp > 1000 );
+		Serial.print("m");
 		timestamp = millis(); // take a new timestamp
+		PT_WAIT_UNTIL(pt, millis() - timestamp > 1000 );
 	  irsend.space(0);
+		Serial.println("s");
+		timestamp = millis(); // take a new timestamp
 	}
 	PT_END(pt);
 }
