@@ -1,0 +1,8 @@
+Credentials.h
+.build
+*.swp
+*.*~
+*.log
+tags
+
+
